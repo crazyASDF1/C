@@ -1,0 +1,166 @@
+Cn lab – 12
+
+
+Aim - Develop a DNS client - server to resolve the given host name and the IP address
+
+Code:
+
+Server Side:
+#include <stdio.h> #include <stdlib.h> #include <string.h>
+#include <arpa/inet.h>
+
+
+#define PORT 8081
+
+
+int main()
+{
+struct sockaddr_in server_addr, client_addr;
+int server_fd, client_fd, client_addr_len = sizeof(client_addr); char buffer[1024] = {0};
+char *hostname = "Anurag.com"; char *ip_address = "192.0.2.1";
+
+// Create socket
+if ((server_fd = socket(AF_INET, SOCK_DGRAM, 0)) == -1)
+{
+perror("Socket creation failed\n"); exit(EXIT_FAILURE);
+}
+ 
+else
+{
+
+
+}
+ 
+
+
+
+printf("Socket creation successful\n");
+ 
+
+
+memset(&server_addr, 0, sizeof(server_addr));
+memset(&client_addr, 0, sizeof(client_addr)); server_addr.sin_family = AF_INET; server_addr.sin_addr.s_addr = INADDR_ANY; server_addr.sin_port = htons(PORT);
+
+// Bind socket
+if (bind(server_fd, (const struct sockaddr *)&server_addr, sizeof(server_addr)) == -1)
+{
+perror("Socket bind failed\n"); exit(EXIT_FAILURE);
+}
+ 
+else
+{
+
+
+}
+ 
+
+
+
+printf("Socket bind successful\n");
+ 
+
+
+printf("DNS server listening on port %d\n", PORT);
+
+
+// Receive DNS request from client
+if (recvfrom(server_fd, buffer, 1024, 0, (struct sockaddr *)&client_addr, &client_addr_len) == - 1)
+{
+perror("Receive failed"); exit(EXIT_FAILURE);
+}
+ 
+else {
+
+
+}
+ 
+
+printf("DNS request received successfully\n");
+ 
+printf("Received DNS request from client: %s\n", buffer);
+// Send DNS response to client
+sendto(server_fd, ip_address, strlen(ip_address), 0, (const struct sockaddr *)&client_addr, client_addr_len);
+printf("Sent DNS response to client: %s\n", ip_address); return 0;
+}
+
+ 
+Client Side:
+#include <stdio.h> #include <stdlib.h> #include <string.h>
+#include <arpa/inet.h> #include <unistd.h>
+
+#define SERVER_IP "127.0.0.1"
+#define PORT 8081
+
+
+int main()
+{
+struct sockaddr_in server_addr; int client_fd;
+char buffer[1024] = {0};
+char *hostname = "Anurag.com";
+
+
+// Create socket
+if ((client_fd = socket(AF_INET, SOCK_DGRAM, 0)) == -1)
+{
+perror("Socket creation failed\n"); exit(EXIT_FAILURE);
+}
+ 
+else
+{
+
+
+}
+ 
+
+
+
+printf("Socket creation successful\n");
+ 
+
+
+memset(&server_addr, 0, sizeof(server_addr)); server_addr.sin_family = AF_INET; server_addr.sin_port = htons(PORT);
+ 
+server_addr.sin_addr.s_addr = inet_addr(SERVER_IP);
+
+
+// Send DNS request to server
+sendto(client_fd, hostname, strlen(hostname), 0, (const struct sockaddr *)&server_addr, sizeof(server_addr));
+printf("Sent DNS request to server: %s\n", hostname);
+
+
+// Receive DNS response from server
+if (recvfrom(client_fd, buffer, 1024, 0, NULL, NULL) == -1)
+{
+perror("Receive failed"); exit(EXIT_FAILURE);
+}
+ 
+else
+{
+
+
+}
+ 
+
+
+
+printf("DNS request received successful\n");
+ 
+
+
+printf("Received DNS response from server: %s\n", buffer);
+
+
+close(client_fd); return 0;
+}
+ 
+
+ 
+Output:
+
+
+Server Side:
+
+
+
+Client Side:
+

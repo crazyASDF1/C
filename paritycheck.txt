@@ -1,0 +1,60 @@
+LAB ASSIGNMENT – 3
+
+PARITY CHECK:
+Code:
+# include <stdio.h>
+# include <conio.h>
+# include<string.h>
+int main()
+{
+    char str1[100];
+    int cho,x,i,j,count=0;
+    printf("\n1.for EVEN PARITY\n2.for ODD PARITY\n");
+    printf("\nInput your choice");
+    scanf("%d",&cho);
+    fflush(stdin);
+    printf("\n Enter the String in binary pattern\n");
+    scanf("%s",str1);
+    for(i=0;i < strlen(str1);i++)
+    {
+        if(str1[i]=='1')
+        count++;
+    }
+    switch(cho)
+    {
+    case 1:
+    if(count%2==0)
+    {
+        x=0;
+        printf("\nParity bit is 0");
+    }
+    else
+    {
+        x=1;
+        printf("\nParity bit is 1");
+    }
+    break;
+    case 2:
+    if(count%2==0)
+    {
+        x=1;
+        printf("\nParity bit is 1");
+    }
+    else
+    {
+        x=0;
+        printf("\nParity bit is 0");
+    }
+    break;
+    default:
+    printf("You have entered wrong choice");
+}
+
+getch();
+}
+
+
+
+
+
+

@@ -1,0 +1,102 @@
+Cn lab-2
+
+
+Server code:
+//server.c
+#include <stdio.h>
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <string.h>
+
+int main() {
+    int ss, br, cs, cal, sp;
+    char sm[20], rm[20];
+    struct sockaddr_in sa, ca;
+
+    printf("Enter server port\n");
+    scanf("%d", &sp);
+    printf("%d\n", sp);
+
+    ss = socket(AF_INET, SOCK_STREAM, 0);
+    if (ss < 0) {
+        printf("Can't create socket\n");
+    } else {
+        printf("Socket is created\n");
+    }
+
+    sa.sin_family = AF_INET;
+    sa.sin_addr.s_addr = htonl(INADDR_ANY);
+    sa.sin_port = htons(sp);
+
+    br = bind(ss, (struct sockaddr*)&sa, sizeof(sa));
+    if (br < 0) {
+        printf("Can't bind socket\n");
+    } else {
+        printf("Binded\n");
+        listen(ss, 5);
+        cal = sizeof(ca);
+        cs = accept(ss, (struct sockaddr*)&ca, &cal);
+
+        if (cs < 0) {
+            printf("Can't accept connection\n");
+        } else {
+            printf("Accepted\n");
+        }
+    }
+
+    return 0;
+}
+
+Client Code:
+//client.c
+#include <stdio.h>
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <string.h>
+
+int main() {
+    int clientSocket, serverPort, result, length;
+    char sendMsg[20], receiveMsg[20];
+    struct sockaddr_in serverAddress, clientAddress;
+
+    printf("Enter server port\n");
+    scanf("%d", &serverPort);
+    printf("%d\n", serverPort);
+
+    clientSocket = socket(AF_INET, SOCK_STREAM, 0);
+    if (clientSocket < 0) {
+        printf("Can't create socket\n");
+    } else {
+        printf("Socket is created\n");
+    }
+
+    serverAddress.sin_family = AF_INET;
+    serverAddress.sin_addr.s_addr = htonl(INADDR_ANY);
+    serverAddress.sin_port = htons(serverPort);
+
+    result = connect(clientSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress));
+    if (result < 0) {
+        printf("Can't connect\n");
+    } else {
+        printf("Connected\n");
+    }
+    return 0;
+}
+Outputs:
+Server:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Client:
+

@@ -1,0 +1,45 @@
+
+LAB ASSIGNMENT - 11
+
+
+
+Topology using DHCP in Cisco Packet Tracer
+
+
+Step-1 : Establish the network configuration with the devices, switches, and routers depicted as illustrated.
+
+Step-2 : Execute the instructions to set up the IP addresses of the devices using the DHCP server.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Step-3 : Verify the revised IP addresses on the devices (e.g., PC0 and PC3).
+     
+	
+
+
+Step-4 : Assess the connectivity between the devices using the ping command.
+
+
+
+
+
